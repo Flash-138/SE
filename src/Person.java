@@ -16,12 +16,4 @@ public class Person {
 
     }
 
-    public void setRole(String role) {
-
-        Role = role;
-    }
-
-    public String getRole() {
-        return Role;
-    }
 }

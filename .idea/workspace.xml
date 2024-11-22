@@ -5,12 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7351b11f-e5bd-41b6-830d-1634477d42e5" name="Changes" comment="Added start of Person Class">
-      <change afterPath="D:/SE_final/.gitignore" afterDir="false" />
-      <change afterPath="D:/SE_final/.idea/misc.xml" afterDir="false" />
-      <change afterPath="D:/SE_final/.idea/modules.xml" afterDir="false" />
-      <change afterPath="D:/SE_final/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="D:/SE_final/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="D:/SE_final/SE_final.iml" afterDir="false" />
+      <change beforePath="D:/SE_final/.idea/workspace.xml" beforeDir="false" afterPath="D:/SE_final/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="D:/SE_final/src/Person.java" beforeDir="false" afterPath="D:/SE_final/src/Person.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +21,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="D:/SE_final" value="Dominic-working" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="D:/SE_final" />
   </component>
   <component name="ProjectColorInfo"><![CDATA[{
@@ -40,7 +41,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "Dominic-Production",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -66,7 +67,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1732248096026</updated>
-      <workItem from="1732248097087" duration="839000" />
+      <workItem from="1732248097087" duration="2108000" />
     </task>
     <task id="LOCAL-00001" summary="Added start of Person Class">
       <option name="closed" value="true" />
@@ -76,11 +77,50 @@
       <option name="project" value="LOCAL" />
       <updated>1732248416219</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Added start of Person Class">
+      <option name="closed" value="true" />
+      <created>1732249299238</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1732249299238</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Added start of Person Class">
+      <option name="closed" value="true" />
+      <created>1732249352267</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1732249352267</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added start of Person Class" />
