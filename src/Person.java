@@ -11,9 +11,17 @@ public class Person {
     public String getName() {
         return Name;
     }
-    public void Set_Name(String name){
+    public void setName(String name){
         this.Name = name;
 
     }
 
+    public void setRole(String role) {
+
+        Role = role;
+    }
+
+    public String getRole() {
+        return Role;
+    }
 }
