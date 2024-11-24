@@ -1,4 +1,5 @@
-
+package Application.Notification;
+import Base.Person;
 public class EmailData {
 	private Person recipient;
 	private String text;

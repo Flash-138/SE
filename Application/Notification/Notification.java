@@ -1,3 +1,5 @@
+package Application.Notification;
+
 import javax.mail.MessagingException;
 
 public class Notification {
