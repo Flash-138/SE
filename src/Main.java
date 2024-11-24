@@ -1,10 +1,26 @@
+import javax.mail.MessagingException;
+
+import Application.Notification.EmailData;
+import Application.Notification.Notification;
+import Base.Person;
 import Business.Task;
 import Business.Task_Manager;
 
 public class Main {
 
-    public static void main(String[] args) {
-
+    public static void main(String[] args) throws Exception {
+        // This is just a placeholder
+        EmailData data = new EmailData();
+		data.setSubject("The GAH Notification System Update");
+		data.setText("<h3>The Notification System is up and running from your Java app</h3>"
+				+ "<p>This email serves to show that after starting your java app, the Notification System was succesffully able to send a message to itself.<p><br>"
+				+ "<bold> Server status: 😍</bold>");
+		Person self = new Person("GAH Facilities", "", "gahfacilities@gmail.com");
+		data.setRecipient(self );
+		
+		new Notification(data); // The notification is auto sent
+        // ENdo of placeholder
+		
         // Create a list to manage tasks
         Task_Manager taskManager = new Task_Manager();
 
