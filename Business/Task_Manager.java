@@ -62,6 +62,15 @@ public class Task_Manager {
         });
     }
 
+    public void SortRoomNum(){
+        Collections.sort(Tasks, new Comparator<Task>() {
+            @Override
+            public int compare(Task T1, Task T2) {
+                return T1.getRoomNum().compareTo(T2.getRoomNum());
+            }
+        });
+    }
+
     public void SortTaskViaTime(){
         Tasks.sort((T1, T2) -> T1.getCreateTime().compareTo(T2.getCreateTime()));
     }

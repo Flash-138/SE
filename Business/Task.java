@@ -12,13 +12,15 @@ public class Task {
     private String Category;
     private final LocalDateTime creationTime;
     private LocalDateTime CompleteTime;
+    private String RoomNum;
 
-    public Task(String Task_name,String task_Description,String Category){
+    public Task(String Task_name,String task_Description,String Category,String RoomNum){
         this.Task_name = Task_name;
         this.task_Description = task_Description;
         this.TASKID = idCounter++;
         this.Category = Category;
         this.creationTime = LocalDateTime.now();
+        this.RoomNum = RoomNum;
     }
 
     public void setTask_name(String task_name) {
@@ -41,6 +43,10 @@ public class Task {
         this.CompleteTime = LocalDateTime.now();
     }
 
+    public void setRoomNum(String Roomnum){
+        this.RoomNum = Roomnum;
+    }
+
     public String getTask_name() {
         return this.Task_name;
     }
@@ -61,6 +67,10 @@ public class Task {
         return this.Category;
     }
 
+    public String getRoomNum(){
+        return this.RoomNum;
+    }
+
     public String getCreateTimeString(){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
         String formattedDateTime = creationTime.format(formatter);
@@ -78,7 +88,7 @@ public class Task {
 
     @Override
     public String toString() {
-        return "Task ID: " + getTASKID() + ", Name: " + getTask_name() + ", Description: "
+        return "Task ID: " + getTASKID() + ", Room#: " + getRoomNum() +", Name: " + getTask_name() + ", Description: "
                 + getTask_Description() + ", Category: " + getTask_Category() +", Priority: " + getTask_Priority()
                 + ", Creation Time: " + getCreateTimeString();
 
