@@ -1,6 +1,4 @@
-package SE.src;
-import Business.Task;
-import Business.Task_Manager;
+import Business.*;
 
 public class Main {
 
@@ -11,9 +9,9 @@ public class Main {
 
         // Create sample tasks
         Task task1 = new Task("Fix Door", "Repair the broken door on 3rd floor","Room","J8392");
-        Task task2 = new Task("Fix Door", "Repair the broken door on 2cd floor","Common Area","I4563");
+        Task task2 = new Task("Fix Door", "Repair the broken door on 2cd floor","Room","I4563");
         Task task3 = new Task("Clean Window", "Clean the main hall windows","Kitchen","G3455");
-        Task task4 = new Task("Paint Wall", "Repaint the walls in Room 101","Room","I4234");
+        Task task4 = new Task("Paint Wall", "Repaint the walls in Room 101","Room","I4563");
 
         // Add tasks to the list
         taskManager.addTask(task1);
@@ -27,25 +25,27 @@ public class Main {
         task4.setTask_Priority(7);
 
         // Print all tasks
-        taskManager.listTasks();
+        //taskManager.listTasks();
 
-        taskManager.SortTaskPriority();
-        taskManager.listTasks();
+        //taskManager.SortTaskPriority();
+        //taskManager.listTasks();
 
-        taskManager.SortTaskID();
-        taskManager.listTasks();
+        //taskManager.SortTaskID();
+        //taskManager.listTasks();
 
-        taskManager.SortTaskName();
-        taskManager.listTasks();
+        //taskManager.SortTaskName();
+        //taskManager.listTasks();
 
-        taskManager.SortTaskViaTime();
-        taskManager.listTasks();
+        //taskManager.SortTaskViaTime();
+        //taskManager.listTasks();
 
-        taskManager.SortRoomNum();
-        taskManager.listTasks();
+        //cleartaskManager.SortRoomNum();
+        //taskManager.listTasks();
 
-        taskManager.SearchTask("Fix Door","name");
-        taskManager.SearchTask("1","id");
+       //taskManager.SearchTask("Room","Category");
+       //taskManager.SearchTask("1","Task id");
+
+        System.out.println(task1.TaskComplete());
 
     }
 

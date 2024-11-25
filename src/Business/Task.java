@@ -1,8 +1,5 @@
 package Business;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 public class Task {
     private String Task_name;
     private String task_Description;
@@ -10,17 +7,18 @@ public class Task {
     private final int TASKID;
     private static int idCounter = 0;
     private String Category;
-    private final LocalDateTime creationTime;
-    private LocalDateTime CompleteTime;
+    private TimeTrack Time;
     private String RoomNum;
+    private String Complete;
 
     public Task(String Task_name,String task_Description,String Category,String RoomNum){
         this.Task_name = Task_name;
         this.task_Description = task_Description;
         this.TASKID = idCounter++;
         this.Category = Category;
-        this.creationTime = LocalDateTime.now();
+        this.Time = new TimeTrack();
         this.RoomNum = RoomNum;
+        this.Complete = "Pending";
     }
 
     public void setTask_name(String task_name) {
@@ -39,12 +37,12 @@ public class Task {
         Task_Priority = task_Priority;
     }
 
-    public void setCompleteTime(){
-        this.CompleteTime = LocalDateTime.now();
-    }
-
     public void setRoomNum(String Roomnum){
         this.RoomNum = Roomnum;
+    }
+
+    public void CompleteTask(){
+        this.Complete = "Complete";
     }
 
     public String getTask_name() {
@@ -71,18 +69,12 @@ public class Task {
         return this.RoomNum;
     }
 
-    public String getCreateTimeString(){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-        String formattedDateTime = creationTime.format(formatter);
-        return formattedDateTime;
+    public String getCompleted(){
+        return this.Complete;
     }
 
-    public LocalDateTime getCreateTime(){
-        return this.creationTime;
-    }
-    
-    public String getCompleteTime(){
-        return this.CompleteTime.toString();
+    public TimeTrack getTimeTrack(){
+        return this.Time;
     }
 
 
@@ -90,8 +82,16 @@ public class Task {
     public String toString() {
         return "Task ID: " + getTASKID() + ", Room#: " + getRoomNum() +", Name: " + getTask_name() + ", Description: "
                 + getTask_Description() + ", Category: " + getTask_Category() +", Priority: " + getTask_Priority()
-                + ", Creation Time: " + getCreateTimeString();
+                + ", Creation Time: " + Time.getCreateTimeString();
 
+    }
+
+    public String TaskComplete(){
+        Time.setCompleteTime();
+        this.CompleteTask();
+        return "Task ID " + getTASKID() + ", Room#: " + getRoomNum() +", Name: " + getTask_name() + ", Description: "
+        + getTask_Description() + ", Category: " + getTask_Category() +", Priority: " + getTask_Priority()
+        + ", Completion Time: " + Time.getCompleteTimeString();
     }
 
 }
