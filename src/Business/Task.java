@@ -9,16 +9,17 @@ public class Task {
     private String Category;
     private TimeTrack Time;
     private String RoomNum;
-    private String Complete;
+    private String Status;
+    private Boolean Complete = false;
 
     public Task(String Task_name,String task_Description,String Category,String RoomNum){
         this.Task_name = Task_name;
         this.task_Description = task_Description;
-        this.TASKID = idCounter++;
         this.Category = Category;
         this.Time = new TimeTrack();
         this.RoomNum = RoomNum;
-        this.Complete = "Pending";
+        this.Status = "Task Created";
+        this.TASKID = idCounter++;
     }
 
     public void setTask_name(String task_name) {
@@ -41,8 +42,8 @@ public class Task {
         this.RoomNum = Roomnum;
     }
 
-    public void CompleteTask(){
-        this.Complete = "Complete";
+    public void TaskStatus(String Status){
+        this.Status = Status;
     }
 
     public String getTask_name() {
@@ -69,8 +70,8 @@ public class Task {
         return this.RoomNum;
     }
 
-    public String getCompleted(){
-        return this.Complete;
+    public String getStatus(){
+        return this.Status;
     }
 
     public TimeTrack getTimeTrack(){
@@ -88,10 +89,10 @@ public class Task {
 
     public String TaskComplete(){
         Time.setCompleteTime();
-        this.CompleteTask();
+        this.Complete = true;
         return "Task ID " + getTASKID() + ", Room#: " + getRoomNum() +", Name: " + getTask_name() + ", Description: "
         + getTask_Description() + ", Category: " + getTask_Category() +", Priority: " + getTask_Priority()
-        + ", Completion Time: " + Time.getCompleteTimeString();
+        + ", Completion Time: " + Time.getCompleteTimeString() + ", Time Taken: " + Time.getTimeTakenString();
     }
 
 }

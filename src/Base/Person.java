@@ -4,12 +4,12 @@ public class Person {
 
     private String Name;
     private String Role;
-    private String email;
 
-    public Person(String name, String role, String email) {
+
+    public Person(String name, String role) {
         this.Name = name;
         this.Role = role;
-        this.email = email;
+
     }
 
     public String getName() {
@@ -18,9 +18,6 @@ public class Person {
     public void setName(String name){
         this.Name = name;
 
-    }
-    public String getEmail() {
-    	return email;
-    }
+
 
 }
