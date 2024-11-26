@@ -148,5 +148,15 @@ public class Task_Manager {
         return SearchedTasks;
     }
 
+	public Object completeTask(String selectedValue) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Object generateReport() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }
