@@ -1,10 +1,12 @@
 package Base;
 
 public class Staff extends Person {
+    public Staff(String name, String username, String password) {
+        super(name, username, password, "staff");  // The role is "staff" for this class
+    }
 
-	public Staff(String name, String role) {
-		super(name, role);
-		// TODO Auto-generated constructor stub
-	}
-    
+    @Override
+    public String toString() {
+        return "Staff: " + getUsername() + ", Role: " + getRole();
+    }
 }

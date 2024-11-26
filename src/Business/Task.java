@@ -74,6 +74,10 @@ public class Task {
         return this.Status;
     }
 
+    public boolean getComplete(){
+        return this.Complete;
+    }
+
     public TimeTrack getTimeTrack(){
         return this.Time;
     }
