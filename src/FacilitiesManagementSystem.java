@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import Business.*;
-import Notification.*;
 
 public class FacilitiesManagementSystem extends JFrame {
     private JPanel taskAssignmentPanel;
@@ -11,8 +10,11 @@ public class FacilitiesManagementSystem extends JFrame {
     private JPanel taskManagementPanel;
     private JPanel taskOrganizationPanel;
     private JPanel reportGeneratorPanel;
-
+    
+    Task_Manager taskManager = new Task_Manager();
     public FacilitiesManagementSystem() {
+    	
+    	setVisible(true);
         setTitle("Facilities Management System");
         setSize(1200, 800);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -26,29 +28,35 @@ public class FacilitiesManagementSystem extends JFrame {
         tabbedPane.addTab("Notifications", null, notificationScroll, "Displays notifications");
 
 
-        taskAssignmentPanel = new Jpanel();
+        taskAssignmentPanel = new JPanel();
         taskAssignmentPanel.setLayout(new BoxLayout(taskAssignmentPanel, BoxLayout.Y_AXIS));
         JTextField taskField = new JTextField(20);
         JButton assignTaskButton = new JButton("Assign Task");
-        assignTaskButton.addActionListener(e -> {assignTask(taskField.getText());});
+        assignTaskButton.addActionListener(e -> {
+        	// Todo: Get task name, description, room, room number, priority
+        	Task task = new Task("task name", taskField.getText(), "room", "room#");
+        	task.setTask_Priority(1);
+        	taskManager.addTask(task);
+        	}
+        );
         taskAssignmentPanel.add(taskField);
         taskAssignmentPanel.add(assignTaskButton);
         tabbedPane.addTab("Task Assignment", null, taskAssignmentPanel, "Assign tasks to employees");
 
 
         //Task Collection
-        taskManagementPanel = new Jpanel();
+        taskManagementPanel = new JPanel();
         taskManagementPanel.setLayout(new BoxLayout(taskManagementPanel, BoxLayout.Y_AXIS));
         JList<String> taskList = new JList<>(new DefaultListModel<>());
         JScrollPane taskListScroll = new JScrollPane(taskList);
         JButton completeTaskButton = new JButton("Complete Task");
-        completeTaskButton.addActionListener(e -> completeTaskButton(taskList.getSelectedValue()));
+        completeTaskButton.addActionListener(e -> taskManager.completeTask(taskList.getSelectedValue()));
         taskManagementPanel.add(taskListScroll);
         taskManagementPanel.add(completeTaskButton);
         tabbedPane.addTab("Task Management", null, taskManagementPanel, "Manage tasks assigned to employees");
 
         //Time Section
-        timeTrackingPanel = new Jpanel();
+        timeTrackingPanel = new JPanel();
         JLabel timeLabel = new JLabel("Time: 00:00:00");
         JButton startButton = new JButton("Start");
         JButton stopButton = new JButton("Stop");
@@ -71,7 +79,7 @@ public class FacilitiesManagementSystem extends JFrame {
         //Report generator section
         reportGeneratorPanel = new JPanel();
         JButton generateReportButton = new JButton("Generate Report");
-        generateReportButton.addActionListener(e -> generateReport());
+        generateReportButton.addActionListener(e -> taskManager.generateReport());
         reportGeneratorPanel.add(generateReportButton);
         tabbedPane.addTab("Report Generator", null, reportGeneratorPanel, "Generate reports based on task completion");
 
