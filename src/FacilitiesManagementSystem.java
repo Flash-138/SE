@@ -14,7 +14,7 @@ public class FacilitiesManagementSystem extends JFrame {
     Task_Manager taskManager = new Task_Manager();
     public FacilitiesManagementSystem() {
     	
-    	setVisible(true);
+    	
         setTitle("Facilities Management System");
         setSize(1200, 800);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -84,6 +84,7 @@ public class FacilitiesManagementSystem extends JFrame {
         tabbedPane.addTab("Report Generator", null, reportGeneratorPanel, "Generate reports based on task completion");
 
         add(tabbedPane, BorderLayout.CENTER);
+        setVisible(true);
     
     }
 
