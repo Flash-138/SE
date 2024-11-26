@@ -1,8 +1,33 @@
+import Base.*;
 import Business.*;
 
 public class Main {
-
     public static void main(String[] args) {
+        // Create a Login system
+        Login loginSystem = new Login();
+
+        // Create Staff and Resident users
+        loginSystem.createUser("John Doe", "john_doe", "password123", "adminKey");  // Staff
+        loginSystem.createUser("Alice Resident", "alice_resident", "password456", "I1234");  // Resident (I---- format)
+        loginSystem.createUser("Bob Resident", "bob_resident", "password789", "J5678");  // Resident (J---- format)
+        loginSystem.createUser("Charlie Resident", "charlie_resident", "password1011", "G4321");  // Resident (G---- format)
+        loginSystem.createUser("Diana Resident", "diana_resident", "password1213", "H8765");  // Resident (H---- format)
+
+        // Try logging in with correct credentials
+        loginSystem.login("john_doe", "password123");  // Staff login
+        loginSystem.login("alice_resident", "password456");  // Resident login
+
+        // Show all users
+        System.out.println("All users in the system:");
+        loginSystem.showAllUsers();
+
+        // Delete a user
+        loginSystem.deleteUser("alice_resident");  // Delete Resident
+
+        // Show all users after deletion
+        System.out.println("All users in the system after deletion:");
+        loginSystem.showAllUsers();
+    
 
         // Create a list to manage tasks
         Task_Manager taskManager = new Task_Manager();
