@@ -1,7 +1,12 @@
 import javax.swing.*;
+
+import Application.Notification.EmailData;
+import Application.Notification.Notification;
+
 import java.awt.*;
 import java.awt.event.*;
 import Business.*;
+import Data.DatabaseManager;
 
 public class FacilitiesManagementSystem extends JFrame {
     private JPanel taskAssignmentPanel;
@@ -11,8 +16,10 @@ public class FacilitiesManagementSystem extends JFrame {
     private JPanel taskOrganizationPanel;
     private JPanel reportGeneratorPanel;
     
+    DatabaseManager databases;
+    
     Task_Manager taskManager = new Task_Manager();
-    public FacilitiesManagementSystem() {
+    public FacilitiesManagementSystem() throws Exception {
     	
     	
         setTitle("Facilities Management System");
@@ -34,11 +41,34 @@ public class FacilitiesManagementSystem extends JFrame {
         JButton assignTaskButton = new JButton("Assign Task");
         assignTaskButton.addActionListener(e -> {
         	// Todo: Get task name, description, room, room number, priority
+        	
+        	// Create email point
+        	EmailData emailData = new EmailData();
+        	emailData.setRecipient(null);
+        	emailData.setSubject("Task has been assigned");
+        	emailData.setText("The task been assigned to a staff memeber. "
+        			+ "You can expect your issue to be resolved in a couple of days.");
+        	
+        	// Create Task
         	Task task = new Task("task name", taskField.getText(), "room", "room#");
+        	Notification notification;
+			try {
+				notification = new Notification(emailData);
+			
         	task.setTask_Priority(1);
         	taskManager.addTask(task);
+        	
+        	databases.addItem(notification);
+        	databases.addItem(task);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+        	
+        	
         	}
         );
+        
         taskAssignmentPanel.add(taskField);
         taskAssignmentPanel.add(assignTaskButton);
         tabbedPane.addTab("Task Assignment", null, taskAssignmentPanel, "Assign tasks to employees");
