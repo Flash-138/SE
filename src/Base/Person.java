@@ -1,22 +1,25 @@
 package Base;
 
 import Business.*;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
-
-public class Person {
+public class Person implements Serializable {
     private String Name;
     private String username;
     private String password;
-    private String role;  // Role attribute (e.g., "admin", "user")
+    private String role; // Role attribute (e.g., "admin", "user")
     private ArrayList<Task> tasks;
+    public String Email;
 
     // Constructor
-    public Person(String Name, String username, String password, String role) {
+    public Person(String Name, String email, String username, String password, String role) {
         this.username = username;
+        this.Email = email;
         this.password = password;
         this.Name = Name;
-        this.role =role;
+        this.role = role;
         this.tasks = new ArrayList<>();
     }
 
@@ -64,5 +67,13 @@ public class Person {
     @Override
     public String toString() {
         return "Name: " + Name + ",Username: " + username + ", Tasks: " + tasks.size();
+    }
+
+    public String getName() {
+        return Name;
+    }
+
+    public String getEmail() {
+        return Email;
     }
 }

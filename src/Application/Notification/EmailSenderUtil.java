@@ -6,7 +6,6 @@ import javax.mail.internet.*;
 
 public class EmailSenderUtil {
 	public static void sendEmail(EmailData emailData) throws MessagingException {
-		System.out.println("Message sneding process started...");
 		Properties properties = new Properties();
 		
 		properties.put("mail.smtp.auth",  "true");
@@ -28,7 +27,6 @@ public class EmailSenderUtil {
 		
 		Message message = prepareMessage(session, accountEmail, emailData);
 		Transport.send(message);
-		System.out.print("Message sent");
 		 
 		
 	}

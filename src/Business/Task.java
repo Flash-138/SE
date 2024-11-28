@@ -1,6 +1,10 @@
 package Business;
 
-public class Task {
+import java.io.Serializable;
+
+import Base.Resident;
+
+public class Task implements Serializable {
     private String Task_name;
     private String task_Description;
     private int Task_Priority = 0;
@@ -12,7 +16,9 @@ public class Task {
     private String Status;
     private Boolean Complete = false;
 
-    public Task(String Task_name,String task_Description,String Category,String RoomNum){
+    public Resident reporter;
+
+    public Task(String Task_name, String task_Description, String Category, String RoomNum) {
         this.Task_name = Task_name;
         this.task_Description = task_Description;
         this.Category = Category;
@@ -30,7 +36,7 @@ public class Task {
         this.task_Description = task_Description;
     }
 
-    public void setCategory(String Category){
+    public void setCategory(String Category) {
         this.Category = Category;
     }
 
@@ -38,11 +44,11 @@ public class Task {
         Task_Priority = task_Priority;
     }
 
-    public void setRoomNum(String Roomnum){
+    public void setRoomNum(String Roomnum) {
         this.RoomNum = Roomnum;
     }
 
-    public void TaskStatus(String Status){
+    public void TaskStatus(String Status) {
         this.Status = Status;
     }
 
@@ -62,41 +68,40 @@ public class Task {
         return TASKID;
     }
 
-    public String getTask_Category(){
+    public String getTask_Category() {
         return this.Category;
     }
 
-    public String getRoomNum(){
+    public String getRoomNum() {
         return this.RoomNum;
     }
 
-    public String getStatus(){
+    public String getStatus() {
         return this.Status;
     }
 
-    public boolean getComplete(){
+    public boolean getComplete() {
         return this.Complete;
     }
 
-    public TimeTrack getTimeTrack(){
+    public TimeTrack getTimeTrack() {
         return this.Time;
     }
 
-
     @Override
     public String toString() {
-        return "Task ID: " + getTASKID() + ", Room#: " + getRoomNum() +", Name: " + getTask_name() + ", Description: "
-                + getTask_Description() + ", Category: " + getTask_Category() +", Priority: " + getTask_Priority()
+        return "Task ID: " + getTASKID() + ", Room#: " + getRoomNum() + ", Name: " + getTask_name() + ", Description: "
+                + getTask_Description() + ", Category: " + getTask_Category() + ", Priority: " + getTask_Priority()
                 + ", Creation Time: " + Time.getCreateTimeString();
 
     }
 
-    public String TaskComplete(){
+    public String TaskComplete() {
         Time.setCompleteTime();
         this.Complete = true;
-        return "Task ID " + getTASKID() + ", Room#: " + getRoomNum() +", Name: " + getTask_name() + ", Description: "
-        + getTask_Description() + ", Category: " + getTask_Category() +", Priority: " + getTask_Priority()
-        + ", Completion Time: " + Time.getCompleteTimeString() + ", Time Taken: " + Time.getTimeTakenString();
+        return "Task ID " + getTASKID() + ", Room#: " + getRoomNum() + ", Name: " + getTask_name() + ", Description: "
+                + getTask_Description() + ", Category: " + getTask_Category() + ", Priority: " + getTask_Priority()
+                + ", Completion Time: " + Time.getCompleteTimeString() + ", Time Taken: " + Time.getTimeTakenString();
     }
 
 }

@@ -2,9 +2,10 @@ package Business;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.io.Serializable;
 import java.time.Duration;
 
-public class TimeTrack {
+public class TimeTrack implements Serializable {
     private final LocalDateTime creationTime;
     private LocalDateTime CompleteTime;
     private Duration TimeTaken;

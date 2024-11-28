@@ -3,8 +3,8 @@ package Base;
 public class Resident extends Person {
     private String roomNumber;
 
-    public Resident(String name, String username, String password, String roomNumber) {
-        super(name, username, password, "resident");  // The role is "resident" for this class
+    public Resident(String name, String email, String username, String password, String roomNumber) {
+        super(name, email, username, password, "resident");  // The role is "resident" for this class
         this.roomNumber = roomNumber;
     }
 

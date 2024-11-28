@@ -15,6 +15,15 @@ public class Task_Manager {
 
     }
 
+//  Getters and Setters
+    public ArrayList<Task> GetTasks() {
+        return Tasks;
+    }
+
+    public void SetTasks(ArrayList<Task> tasks) {
+        Tasks = tasks;
+    }
+
 // Add, Delete and List Tasks
     public void addTask(Task task) {
         Tasks.add(task);
