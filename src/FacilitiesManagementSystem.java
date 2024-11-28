@@ -46,7 +46,7 @@ public class FacilitiesManagementSystem extends JFrame {
         	EmailData emailData = new EmailData();
         	emailData.setRecipient(null);
         	emailData.setSubject("Task has been assigned");
-        	emailData.setText("The task been assigned to a staff memeber. "
+        	emailData.setText("The task has been assigned to a staff memeber. "
         			+ "You can expect your issue to be resolved in a couple of days.");
         	
         	// Create Task
