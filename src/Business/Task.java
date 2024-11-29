@@ -3,6 +3,7 @@ package Business;
 import java.io.Serializable;
 
 import Base.Resident;
+import Base.Staff;
 
 public class Task implements Serializable {
     private String Task_name;
@@ -15,6 +16,7 @@ public class Task implements Serializable {
     private String RoomNum;
     private String Status;
     private Boolean Complete = false;
+    private Staff assignee;
 
     public Resident reporter;
 
@@ -26,6 +28,14 @@ public class Task implements Serializable {
         this.RoomNum = RoomNum;
         this.Status = "Task Created";
         this.TASKID = idCounter++;
+    }
+
+    public void Assign(Staff assignee) {
+        this.assignee = assignee;
+    }
+
+    public boolean isComplete() {
+        return this.Complete;
     }
 
     public void setTask_name(String task_name) {

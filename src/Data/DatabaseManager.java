@@ -65,6 +65,17 @@ public class DatabaseManager {
 
     }
 
+    public void UpdateUser(Person person) {
+        for (Person user : userDatabase) {
+            if (user.getUsername().equals(person.getUsername())) {
+                userDatabase.remove(user);
+                userDatabase.add(person);
+                saveDatabase(USER_FILE, userDatabase);
+                break;
+            }
+        }
+    }
+
     public Object getItem(Database database, int id) {
         ArrayList<?> dataPoints;
         if (database == Database.USERS) {

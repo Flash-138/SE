@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 import Application.Notification.EmailData;
 import Application.Notification.Notification;
@@ -8,15 +10,16 @@ import Business.*;
 import Data.DatabaseManager;
 
 public class Main {
-    enum UITab {
+    static enum UITab {
         Notifications,
         Tasks,
         SpecificTask,
         CreateTask,
         Resident,
+        Main,
     }
 
-    static UITab currentTab = null;
+    static UITab currentTab = UITab.Main;
     static Task currentTask = null;
     static Task_Manager taskManager;
     static DatabaseManager database;
@@ -77,7 +80,7 @@ public class Main {
                             new CLIOption("Go back", () -> currentTab = UITab.Tasks),
                     });
                     break;
-                default:
+                case Main:
                     ui.CreateOptionMenu("", new CLIOption[] {
                             new CLIOption("Notifications", () -> {
                                 // Print all the notifications that are for the user
@@ -123,6 +126,7 @@ public class Main {
                                     String newPassword = ui.GetInputString();
 
                                     user.setPassword(newPassword);
+                                    database.UpdateUser(user);
                                     ui.DisplayMessage("Password changed successfully");
                                 }
                             }),
@@ -133,13 +137,11 @@ public class Main {
                                 ui.DisplayMessage("Enter the task description: ");
                                 String taskDescription = ui.GetInputString();
 
-                                ui.DisplayMessage("Enter the task category: ");
+                                ui.DisplayMessage("Enter the task room: ");
                                 String taskCategory = ui.GetInputString();
 
-                                ui.DisplayMessage("Enter the room number: ");
-                                String roomNumber = ui.GetInputString();
-
-                                var task = new Task(taskName, taskDescription, taskCategory, roomNumber);
+                                var task = new Task(taskName, taskDescription, taskCategory,
+                                        ((Resident) user).getRoomNumber());
                                 // task.setTask_Priority(taskPriority);
 
                                 task.reporter = (Resident) user;
@@ -160,9 +162,14 @@ public class Main {
                             }),
                             new CLIOption("Logout", () -> {
                                 ui.DisplayMessage("Logging out...");
+                                System.exit(0);
                                 return;
                             }),
                     });
+                    break;
+                default:
+                    System.out.println("Invalid tab: " + currentTab);
+                    currentTab = UITab.Main;
                     break;
             }
         }
@@ -170,11 +177,15 @@ public class Main {
 
     public static void openStaffUI(CLIManager ui) {
         while (true) {
+            String completion = "";
             ui.DisplayMessage("Current tab: " + currentTab);
-            switch (currentTab) {
+            if (currentTask != null) {
+                completion = currentTask.isComplete() ? " (Complete)" : " (Incomplete)";
+            }
 
+            switch (currentTab) {
                 case SpecificTask:
-                    ui.CreateOptionMenu("Task: " + currentTask.getTask_name(), new CLIOption[] {
+                    ui.CreateOptionMenu("Task: " + currentTask.getTask_name() + completion, new CLIOption[] {
                             new CLIOption("Mark as complete", () -> {
                                 currentTask.TaskComplete();
 
@@ -189,27 +200,64 @@ public class Main {
                                 database.addItem(notification);
 
                                 ui.DisplayMessage("Task marked as complete");
-
+                                currentTab = UITab.Main;
                             }),
-                            new CLIOption("Go back", () -> currentTab = UITab.Tasks),
-                    });
-                    break;
-                case Tasks:
-                    ui.CreateOptionMenu("Tasks", new CLIOption[] {
-                            new CLIOption("View Tasks", () -> {
-                                // Print all the tasks and allow the user to select a task
-                                var tasks = taskManager.GetTasks();
-                                CLIOption[] taskOptions = new CLIOption[tasks.size() + 1];
-                                for (int i = 0; i < tasks.size(); i++) {
-                                    Task task = tasks.get(i);
-                                    taskOptions[i] = new CLIOption(task.getTask_name(), () -> {
-                                        currentTab = UITab.SpecificTask;
-                                        currentTask = task;
+                            new CLIOption("Assign Task", () -> {
+                                // List all the staff members and allow the user to select a staff member to
+                                // assign the task to
+                                var users = database.getUsers();
+                                var staffMembers = new ArrayList<Staff>();
+
+                                for (Person user : users) {
+                                    if (user instanceof Staff) {
+                                        staffMembers.add((Staff) user);
+                                    }
+                                }
+                                CLIOption[] staffOptions = new CLIOption[staffMembers.size() + 1];
+                                for (int i = 0; i < staffMembers.size(); i++) {
+                                    Staff staff = staffMembers.get(i);
+                                    staffOptions[i] = new CLIOption(staff.getName(), () -> {
+                                        currentTask.Assign(staff);
+
+                                        {
+                                            var emailData = new EmailData();
+                                            emailData.setRecipient(staff);
+                                            emailData.setSubject("Task assigned: " + currentTask.getTask_name());
+                                            emailData.setText(
+                                                    "You have been assigned the task " + currentTask.getTask_name());
+
+                                            var notification = new Notification(emailData);
+                                            notification.send();
+
+                                            database.addItem(notification);
+
+                                        }
+
+                                        {
+                                            var emailData = new EmailData();
+                                            emailData.setRecipient(currentTask.reporter);
+                                            emailData.setSubject("Task assigned: " + currentTask.getTask_name());
+                                            emailData.setText("The task " + currentTask.getTask_name()
+                                                    + " has been assigned to " + staff.getName());
+
+                                            var notification = new Notification(emailData);
+                                            notification.send();
+
+                                            database.addItem(notification);
+                                        }
+
+                                        // Update the database task
+                                        database.reloadTasks(taskManager.GetTasks());
+
+                                        ui.DisplayMessage("Task assigned to " + staff.getName());
                                     });
                                 }
+
                             }),
+                            new CLIOption("Go back", () -> currentTab = UITab.Main),
                     });
                     break;
+
                 case Resident:
                     ui.CreateOptionMenu("Residents", new CLIOption[] {
                             new CLIOption("View Residents", () -> {
@@ -227,6 +275,9 @@ public class Main {
                                 }
                             }),
                             new CLIOption("Create Resident", () -> {
+                                ui.DisplayMessage("Enter the resident's username:");
+                                String residentUsername = ui.GetInputString();
+
                                 ui.DisplayMessage("Enter the resident name: ");
                                 String residentName = ui.GetInputString();
 
@@ -239,7 +290,8 @@ public class Main {
                                 ui.DisplayMessage("Enter the resident room number: ");
                                 String residentRoomNumber = ui.GetInputString();
 
-                                var resident = new Resident(residentName, residentEmail, residentRoomNumber,
+                                var resident = new Resident(residentName, residentEmail,
+                                        residentUsername,
                                         residentPassword,
                                         residentRoomNumber);
 
@@ -259,14 +311,71 @@ public class Main {
                             }),
                             new CLIOption("Go back", () -> currentTab = UITab.Notifications),
                     });
-                default:
+                case Main:
                     ui.CreateOptionMenu("", new CLIOption[] {
-                            new CLIOption("Task", () -> currentTab = UITab.Tasks),
+                            new CLIOption("View Residents", () -> {
+                                currentTab = UITab.Resident;
+                            }),
+                            new CLIOption("View Task by Name", () -> {
+                                var tasks = taskManager.GetTasks();
+                                Collections.sort(tasks, (t1, t2) -> t1.getTask_name().compareTo(t2.getTask_name()));
+                                CLIOption[] taskOptions = new CLIOption[tasks.size() + 1];
+                                for (int i = 0; i < tasks.size(); i++) {
+                                    Task task = tasks.get(i);
+                                    taskOptions[i] = new CLIOption(task.getTask_name(), () -> {
+                                        currentTab = UITab.SpecificTask;
+                                        currentTask = task;
+                                    });
+                                }
+                                taskOptions[tasks.size()] = new CLIOption("Go back", () -> currentTab = UITab.Tasks);
+                                ui.CreateOptionMenu("Tasks", taskOptions);
+                            }),
+
+                            new CLIOption("View Task by Room Number", () -> {
+                                var tasks = taskManager.GetTasks();
+                                Collections.sort(tasks, (t1, t2) -> t1.getRoomNum().compareTo(t2.getRoomNum()));
+                                CLIOption[] taskOptions = new CLIOption[tasks.size() + 1];
+                                for (int i = 0; i < tasks.size(); i++) {
+                                    Task task = tasks.get(i);
+                                    taskOptions[i] = new CLIOption(task.getRoomNum(), () -> {
+                                        currentTab = UITab.SpecificTask;
+                                        currentTask = task;
+                                    });
+                                }
+                                taskOptions[tasks.size()] = new CLIOption("Go back", () -> currentTab = UITab.Tasks);
+                                ui.CreateOptionMenu("Tasks", taskOptions);
+                            }),
+
+                            new CLIOption("View tasks by Priority", () -> {
+                                var tasks = taskManager.GetTasks();
+                                Collections.sort(tasks,
+                                        (t1, t2) -> Integer.compare(t1.getTask_Priority(), t2.getTask_Priority()));
+                                CLIOption[] taskOptions = new CLIOption[tasks.size() + 1];
+                                for (int i = 0; i < tasks.size(); i++) {
+                                    Task task = tasks.get(i);
+                                    taskOptions[i] = new CLIOption(task.getTask_name(), () -> {
+                                        currentTab = UITab.SpecificTask;
+                                        currentTask = task;
+                                    });
+                                }
+                                taskOptions[tasks.size()] = new CLIOption("Go back", () -> currentTab = UITab.Tasks);
+                                ui.CreateOptionMenu("Tasks", taskOptions);
+                            }),
+
+                            new CLIOption("Go back", () -> {
+                                currentTab = UITab.Main;
+                            }),
+
                             new CLIOption("Logout", () -> {
                                 ui.DisplayMessage("Logging out...");
+                                System.exit(0);
                                 return;
                             }),
                     });
+                    break;
+                default:
+                    System.out.println("Invalid tab: " + currentTab);
+                    currentTab = UITab.Main;
                     break;
             }
 
